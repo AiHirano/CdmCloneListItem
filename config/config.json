@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "clone-list-item-command-set": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/cloneListItem/CloneListItemCommandSet.js",
+          "manifest": "./src/extensions/cloneListItem/CloneListItemCommandSet.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "CloneListItemCommandSetStrings": "lib/extensions/cloneListItem/loc/{locale}.js"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/command-set-extension-manifest.schema.json",
+
+  "id": "a7bc6728-6032-438e-94ba-a4c1d736c241",
+  "alias": "CloneListItemCommandSet",
+  "componentType": "Extension",
+  "extensionType": "ListViewCommandSet",
+  "version": "*",
+  "manifestVersion": 2,
+  
+  "requiresCustomScript": false,
+
+  "items": {
+    "ONE_ITEM_SELECTED": {
+      "title": { "default": "アイテムを1つ選択" },
+      "iconImageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Shared%20Documents/Images/ペンギン.svg",
+      "type": "command"
+    },
+    "TWO_ITEM_SELECTED": {
+      "title": { "default": "アイテムを2つ選択" },
+      "iconImageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Shared%20Documents/Images/オオカミ.svg",
+      "type": "command"
+    },
+    "ALWAYS_ON": {
+      "title": { "default": "常にオン" },
+      "iconImageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Shared%20Documents/Images/アザラシ.svg",
+      "type": "command"
+    },
+    "ITEM_COPY":{
+      "title": { "default": "アイテムのコピー" },
+      "iconImageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Shared%20Documents/Images/ヒツジアイコン.png",
+      "type": "command"
+    }
+  }
+}

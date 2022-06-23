@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <ClientSideComponentInstance
+        Title="CloneListItem"
+        Location="ClientSideExtension.ListViewCommandSet"
+        ListTemplateId="100"
+        Properties="{&quot;sampleTextOne&quot;:&quot;One item is selected in the list.&quot;, &quot;sampleTextTwo&quot;:&quot;This command is always visible.&quot;}"
+        ComponentId="a7bc6728-6032-438e-94ba-a4c1d736c241" />
+</Elements>

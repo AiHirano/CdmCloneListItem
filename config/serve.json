@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Lists/Sheep/AllItems.aspx",
+      "customActions": {
+        "a7bc6728-6032-438e-94ba-a4c1d736c241": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+           "messagePrefix":"[command_set_prifix]"
+          }
+        }
+      }
+    },
+    "cloneListItem": {
+      "pageUrl": "https://officeilearning.sharepoint.com/sites/SPFx_Training/Lists/Custom%20Command/AllItems.aspx",
+      "customActions": {
+        "a7bc6728-6032-438e-94ba-a4c1d736c241": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+            "sampleTextOne": "One item is selected in the list",
+            "sampleTextTwo": "This command is always visible."
+          }
+        }
+      }
+    }
+  }
+}
