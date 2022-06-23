@@ -2,9 +2,9 @@
 
 ## Summary
 
-Short summary on functionality and used technologies.
+このコマンドは単純なSharePoint リストアイテムをコピー作成できます。
 
-[picture of the solution in action, if possible]
+![アイテムのコピーコマンド](img/CloneListItem.jpg)
 
 ## Used SharePoint Framework Version
 
@@ -19,20 +19,20 @@ Short summary on functionality and used technologies.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+> 事前に SharePoint リストを用意しておく必要があります。列は、Photo(イメージ列)、Description (1行テキスト)の2だけです。
+![リスとイメージ](img/SPList.jpg)
 
 ## Solution
 
 Solution|Author(s)
 --------|---------
-folder name | Author details (name, company, twitter alias with link)
+CmdCloneListItem | Ai HIRANO
 
 ## Version history
 
 Version|Date|Comments
 -------|----|--------
-1.1|March 10, 2021|Update comment
-1.0|January 29, 2021|Initial release
+1.0|June 23, 2022|Initial release
 
 ## Disclaimer
 
@@ -47,22 +47,6 @@ Version|Date|Comments
 - in the command-line run:
   - **npm install**
   - **gulp serve**
-
-> Include any additional steps as needed.
-
-## Features
-
-Description of the extension that expands upon high-level summary above.
-
-This extension illustrates the following concepts:
-
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
 
 ## References
 
