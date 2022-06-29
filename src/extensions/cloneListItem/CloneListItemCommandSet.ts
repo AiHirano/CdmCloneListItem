@@ -1,17 +1,16 @@
-import { override } from '@microsoft/decorators';
 import { Log } from '@microsoft/sp-core-library';
 import {
   BaseListViewCommandSet,
   Command,
   IListViewCommandSetListViewUpdatedParameters,
-  IListViewCommandSetExecuteEventParameters
+  IListViewCommandSetExecuteEventParameters,
+  ListViewStateChangedEventArgs
 } from '@microsoft/sp-listview-extensibility';
 import { Dialog } from '@microsoft/sp-dialog';
 
 import * as strings from 'CloneListItemCommandSetStrings';
 //ヘルパークラス
 import{SPHttpClient,SPHttpClientResponse} from '@microsoft/sp-http';
-
 
 /**
  * If your command set uses the ClientSideComponentProperties JSON input,
@@ -22,14 +21,13 @@ export interface ICloneListItemCommandSetProperties {
   // This is an example; replace with your own properties
   sampleTextOne: string;
   sampleTextTwo: string;
-  messagePrefix: string;
 }
 
 //SharePoint リストアイテム
 interface IListItem{
   Id:number;
   Title:string;
-　Photo:string;
+  Photo:string;
   Description:string;  
 }
 
@@ -40,15 +38,28 @@ const LOG_SOURCE: string = 'CloneListItemCommandSet';
 export default class CloneListItemCommandSet extends BaseListViewCommandSet<ICloneListItemCommandSetProperties> {
   //エンティティ型名
   private listItemEntityTypeName:string=undefined;
-  @override
+
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, 'Initialized CloneListItemCommandSet');
+
+    // initial state of the command's visibility
+    const item_copy: Command = this.tryGetCommand('ITEM_COPY');    
+    const one_item_selected: Command = this.tryGetCommand('ONE_ITEM_SELECTED');    
+    const two_item_selected: Command = this.tryGetCommand('TWO_ITEM_SELECTED');
+    const always_on: Command = this.tryGetCommand('ALWAYS_ON');
+
+    item_copy.visible = false;
+    one_item_selected.visible=false;
+    two_item_selected.visible=false;
+    always_on.visible=true;
+ 
+    this.context.listView.listViewStateChangedEvent.add(this, this._onListViewStateChanged);
+
     return Promise.resolve();
   }
+  private _onListViewStateChanged = (args: ListViewStateChangedEventArgs): void => {
+    Log.info(LOG_SOURCE, 'List view state changed');
 
-
-  @override
-  public onListViewUpdated(event: IListViewCommandSetListViewUpdatedParameters): void {
     //コマンドの取得
     const item_copy: Command = this.tryGetCommand('ITEM_COPY');    
     const one_item_selected: Command = this.tryGetCommand('ONE_ITEM_SELECTED');    
@@ -64,41 +75,41 @@ export default class CloneListItemCommandSet extends BaseListViewCommandSet<IClo
   
     //Custom Listの時
     if (ListTitle == TARGET_LISTS[0]) {
-      //コマンドの非表示     
-      item_copy.visible=false;
-      always_on.visible=true;
-      //アイテムを1つ選択しているときに表示する
-      if (one_item_selected) {
-        one_item_selected.visible = event.selectedRows.length === 1;
-      }
-      if (two_item_selected) {
-        two_item_selected.visible = event.selectedRows.length === 2;
-      }
+          
+      item_copy.visible=false;//コピーコマンドは非表示
+      always_on.visible=true;//表示
+      //アイテムを1つ選択しているときに表示する      
+      one_item_selected.visible = this.context.listView.selectedRows.length === 1;
+      //アイテムを2つ選択しているときに表示する
+      two_item_selected.visible = this.context.listView.selectedRows.length === 2;
+     
     }
     //Sheepの時
     if(ListTitle == TARGET_LISTS[1]){
-      //コマンドの非表示   
+      //コピーコマンドの以外をすべて非表示   
       one_item_selected.visible=false;
       two_item_selected.visible=false;
       always_on.visible=false;
-      if (item_copy) {
-        item_copy.visible = event.selectedRows.length === 1;
-      }
-     }
+      //コピーコマンドのみ表示
+      item_copy.visible =   this.context.listView.selectedRows.length === 1;
+       }
 
+       this.raiseOnChange();
+       
+    // TODO: Add your logic here
+    // You can call this.raiseOnChage() to update the command bar
   }
 
-  @override
   public onExecute(event: IListViewCommandSetExecuteEventParameters): void {
     switch (event.itemId) {
       case 'ONE_ITEM_SELECTED':
-        Dialog.alert(`${this.properties.messagePrefix} ONE_ITEM_SELECTED コマンドがクリックされました; Title = ${event.selectedRows[0].getValueByName('Title')}`);
+        Dialog.alert(`ONE_ITEM_SELECTED コマンドがクリックされました; Title = ${event.selectedRows[0].getValueByName('Title')}`);
         break;
       case 'TWO_ITEM_SELECTED':
-        Dialog.alert(`${this.properties.messagePrefix} TWO_ITEM_SELECTED コマンドがクリックされました; Title = ${event.selectedRows[event.selectedRows.length - 1].getValueByName('Title')}`);
+        Dialog.alert(`TWO_ITEM_SELECTED コマンドがクリックされました; Title = ${event.selectedRows[event.selectedRows.length - 1].getValueByName('Title')}`);
         break;
       case 'ALWAYS_ON':
-        Dialog.alert(`${this.properties.messagePrefix} ALWAYS_ON コマンドがクリックされました. 選択された総数: ${event.selectedRows.length}`);
+        Dialog.alert(`ALWAYS_ON コマンドがクリックされました. 選択された総数: ${event.selectedRows.length}`);
         break;
       case 'ITEM_COPY':
         this.getListItem(event.selectedRows[0].getValueByName('ID')).then((response)=>{   

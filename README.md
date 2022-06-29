@@ -32,7 +32,8 @@ CmdCloneListItem | Ai HIRANO
 
 Version|Date|Comments
 -------|----|--------
-1.0|June 23, 2022|Initial release
+2.0|June 23, 2022| Update to v1.15.0 
+1.0|December 21, 2021|Initial release
 
 ## Disclaimer
 
